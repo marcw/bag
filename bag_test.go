@@ -68,3 +68,18 @@ func TestFrom(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestMap(t *testing.T) {
+	bag := NewBag()
+	bag.Set("foo", "bar")
+	b2 := From(bag.Map())
+
+	v, ok := b2.GetString("foo")
+	if !ok {
+		t.Fail()
+	}
+	if v != "bar" {
+		t.Fail()
+	}
+}
+

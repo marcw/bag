@@ -84,3 +84,8 @@ func (b *Bag) GetInt(key string) (value int, ok bool) {
 	value, ok = v.(int)
 	return
 }
+
+// Returns the underlying map
+func (b *Bag) Map() map[string]interface{} {
+	return b.data
+}
