@@ -10,10 +10,7 @@ func ExampleNewBag() {
 	bag.Set("foo", "hey, this is a string and here is a number:")
 	bag.Set("bar", 42)
 
-	foo, _ := bag.GetString("foo")
-	bar, _ := bag.GetInt("bar")
-
-	fmt.Println(foo, bar)
+	fmt.Println(bag.GetString("foo"), bag.GetInt("bar"))
 	// Output:
 	// hey, this is a string and here is a number: 42
 }
@@ -22,11 +19,7 @@ func TestSetGet(t *testing.T) {
 	bag := NewBag()
 	bag.Set("foo", "bar")
 
-	v, ok := bag.GetString("foo")
-	if !ok {
-		t.Fail()
-	}
-	if v != "bar" {
+	if bag.GetString("foo") != "bar" {
 		t.Fail()
 	}
 }
@@ -34,11 +27,7 @@ func TestSetGet(t *testing.T) {
 func TestSetGetBool(t *testing.T) {
 	bag := NewBag()
 	bag.Set("foo", true)
-	v, ok := bag.GetBool("foo")
-	if !ok {
-		t.Fail()
-	}
-	if v != true {
+	if bag.GetBool("foo") != true {
 		t.Fail()
 	}
 }
@@ -46,11 +35,7 @@ func TestSetGetBool(t *testing.T) {
 func TestSetGetInt(t *testing.T) {
 	bag := NewBag()
 	bag.Set("foo", 65535)
-	v, ok := bag.GetInt("foo")
-	if !ok {
-		t.Fail()
-	}
-	if v != 65535 {
+	if bag.GetInt("foo") != 65535 {
 		t.Fail()
 	}
 }
@@ -60,11 +45,7 @@ func TestFrom(t *testing.T) {
 	data["foo"] = "bar"
 	bag := From(data)
 
-	v, ok := bag.GetString("foo")
-	if !ok {
-		t.Fail()
-	}
-	if v != "bar" {
+	if bag.GetString("foo") != "bar" {
 		t.Fail()
 	}
 }
@@ -74,11 +55,19 @@ func TestMap(t *testing.T) {
 	bag.Set("foo", "bar")
 	b2 := From(bag.Map())
 
-	v, ok := b2.GetString("foo")
-	if !ok {
+	if b2.GetString("foo") != "bar" {
 		t.Fail()
 	}
-	if v != "bar" {
+}
+
+func TestHas(t *testing.T) {
+	bag := NewBag()
+	bag.Set("foo", "bar")
+
+	if !bag.Has("foo") {
+		t.Fail()
+	}
+	if bag.Has("bar") {
 		t.Fail()
 	}
 }
